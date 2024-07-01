@@ -1,17 +1,15 @@
 type F = (x: number) => number;
 
 function compose(functions: F[]): F {
-  return function (x: number) {
-    let init = x;
+  function calculator(x: number) {
+    if (!functions.length) return x;
     
-    for (let i = functions.length - 1; i >= 0; --i) {
-      console.log("start: ", init);
-      init = functions[i](init);
-      console.log("end: ", init);
-    }
-    
-    return init;
+    const currentFunc = functions.pop();
+
+    return calculator(currentFunc(x));
   }
+  
+  return calculator;
 };
 
 /**
